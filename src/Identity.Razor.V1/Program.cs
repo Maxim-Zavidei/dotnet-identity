@@ -1,3 +1,6 @@
+using Identity.Razor.V1.Authorization;
+using Microsoft.AspNetCore.Authorization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // We specift the name of the default authentication handler that should be used
@@ -28,9 +31,13 @@ builder.Services.AddAuthorization(opt =>
     {
         policy
         .RequireClaim("Department", "HR")
-        .RequireClaim("Manager");
+        .RequireClaim("Manager")
+        .Requirements.Add(new HrManagerProbationRequirement(3));
     });
 });
+
+// Add the custom authorization handler as a service
+builder.Services.AddSingleton<IAuthorizationHandler, HrManagerProbationRequirementHandler>();
 
 builder.Services.AddRazorPages();
 
