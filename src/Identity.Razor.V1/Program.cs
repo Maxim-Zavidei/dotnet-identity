@@ -6,6 +6,30 @@ builder.Services.AddAuthentication("MyCookieAuth")
 .AddCookie("MyCookieAuth", opt =>
 {
     opt.Cookie.Name = "MyCookieAuth";
+    // Specify where the account page is to redirect the user when he hits an authorized page or endpoint.
+    opt.LoginPath = "/Account/Login";
+    // Specify access denied page
+    opt.AccessDeniedPath = "/Account/AccessDenied";
+});
+
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("AdminOnly", policy =>
+    {
+        policy.RequireClaim("Admin");
+    });
+
+    opt.AddPolicy("MustBeFromHrDepartment", policy =>
+    {
+        policy.RequireClaim("Department", "HR");
+    });
+
+    opt.AddPolicy("HRManagerOnly", policy =>
+    {
+        policy
+        .RequireClaim("Department", "HR")
+        .RequireClaim("Manager");
+    });
 });
 
 builder.Services.AddRazorPages();
