@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthentication()
+// We specift the name of the default authentication handler that should be used
+// by the authentication middleware.
+builder.Services.AddAuthentication("MyCookieAuth")
 .AddCookie("MyCookieAuth", opt =>
 {
     opt.Cookie.Name = "MyCookieAuth";
@@ -23,6 +25,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
