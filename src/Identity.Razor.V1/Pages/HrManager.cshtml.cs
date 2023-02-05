@@ -49,7 +49,7 @@ public class HrManagerModel : PageModel
         }
         var httpClient = httpClientFactory.CreateClient(clientName);
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
-        return await httpClient.GetFromJsonAsync<T>(url);
+        return (await httpClient.GetFromJsonAsync<T>(url))!;
     }
 
     private async Task<JwtToken> Authenticate()
