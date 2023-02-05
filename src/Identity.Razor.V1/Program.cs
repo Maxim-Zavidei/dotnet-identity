@@ -13,6 +13,7 @@ builder.Services.AddAuthentication("MyCookieAuth")
     opt.LoginPath = "/Account/Login";
     // Specify access denied page
     opt.AccessDeniedPath = "/Account/AccessDenied";
+    opt.ExpireTimeSpan = TimeSpan.FromMinutes(4);
 });
 
 builder.Services.AddAuthorization(opt =>

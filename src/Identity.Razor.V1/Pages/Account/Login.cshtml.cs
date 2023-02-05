@@ -35,8 +35,15 @@ public class LoginModel : PageModel
             var identity = new ClaimsIdentity(claims, "MyCookieAuth");
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
+            // Here we can initialize some properties for the authentication
+            // e.g if the authentication cookie should be persistent or not.
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = InputModel.RememberMe
+            };
+
             // Serializes the claims principal into a string, encrypts that string and saves it as a cookie in the HttpContext
-            await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal);
+            await HttpContext.SignInAsync("MyCookieAuth", claimsPrincipal, authProperties);
 
             return RedirectToPage("/Index");
         }
