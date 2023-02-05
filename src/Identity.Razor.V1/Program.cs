@@ -45,6 +45,14 @@ builder.Services.AddHttpClient("OurWebApi", clinet =>
     clinet.BaseAddress = new Uri("https://localhost:7001/");
 });
 
+builder.Services.AddSession(opt =>
+{
+    // We want the session to be saved
+    opt.Cookie.HttpOnly = true;
+    opt.IdleTimeout = TimeSpan.FromHours(8);
+    opt.Cookie.IsEssential = true;
+});
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -64,6 +72,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 
