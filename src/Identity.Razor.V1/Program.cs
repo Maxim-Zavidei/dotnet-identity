@@ -40,6 +40,11 @@ builder.Services.AddAuthorization(opt =>
 // Add the custom authorization handler as a service
 builder.Services.AddSingleton<IAuthorizationHandler, HrManagerProbationRequirementHandler>();
 
+builder.Services.AddHttpClient("OurWebApi", clinet =>
+{
+    clinet.BaseAddress = new Uri("https://localhost:7001/");
+});
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
