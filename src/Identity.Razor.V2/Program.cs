@@ -1,6 +1,13 @@
+using Identity.Razor.V2.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+{
+    opt.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+});
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
