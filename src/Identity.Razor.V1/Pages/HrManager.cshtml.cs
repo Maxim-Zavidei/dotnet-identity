@@ -24,6 +24,11 @@ public class HrManagerModel : PageModel
 
     public async Task OnGetAsync()
     {
+        WeatherForecastItems = await InvokeEndpoint<List<WeatherForecastDto>>("OurWebApi", "WeatherForecast");
+    }
+
+    private async Task<T> InvokeEndpoint<T>(string clientName, string url)
+    {
         // Get token from session
         JwtToken? token = null;
         // First check if we already have a token in the session.
@@ -42,9 +47,9 @@ public class HrManagerModel : PageModel
                 token = await Authenticate();
             }
         }
-        var httpClient = httpClientFactory.CreateClient("OurWebApi");
+        var httpClient = httpClientFactory.CreateClient(clientName);
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
-        WeatherForecastItems = await httpClient.GetFromJsonAsync<List<WeatherForecastDto>>("WeatherForecast");
+        return await httpClient.GetFromJsonAsync<T>(url);
     }
 
     private async Task<JwtToken> Authenticate()
