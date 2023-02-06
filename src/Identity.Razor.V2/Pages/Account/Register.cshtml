@@ -1,0 +1,48 @@
+﻿@page
+@model Identity.Razor.V2.Pages.RegisterModel
+@{
+}
+
+<p>
+    <h3>User Registration</h3>
+</p>
+
+<div class="container border p-3">
+    <form method="post">
+
+        @* Makes sure to validate the model. *@
+        @* Display any error during execution not just model validation ones, using the asp-validation-summary="All" tag *@
+        <div class="text-danger" asp-validation-summary="All"></div>
+
+        <div class="form-group row py-2">
+            <div class="col-2">
+                <label asp-for="RegisterViewModel.Email"></label>
+            </div>
+            <div class="col-3">
+                <input type="text" asp-for="RegisterViewModel.Email" class="form-control" />
+            </div>
+            <div class="col-3">
+                <span class="text-danger" asp-validation-for="RegisterViewModel.Email"></span>
+            </div>
+        </div>
+
+        <div class="form-group row py-2">
+            <div class="col-2">
+                <label asp-for="RegisterViewModel.Password"></label>
+            </div>
+            <div class="col-3">
+                <input type="password" asp-for="RegisterViewModel.Password" class="form-control" />
+            </div>
+            <div class="col-3">
+                <span class="text-danger" asp-validation-for="RegisterViewModel.Password"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Register" />
+            </div>
+        </div>
+
+    </form>
+</div>
