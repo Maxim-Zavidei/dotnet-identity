@@ -21,7 +21,7 @@ public class EmailService : IEmailService
         using (var emailClient = new SmtpClient(smtpOptions.Value.Host, smtpOptions.Value.Port))
         {
             emailClient.Credentials = new NetworkCredential(smtpOptions.Value.User, smtpOptions.Value.Password);
-            await emailClient.SendMailAsync(message);
+            // await emailClient.SendMailAsync(message);
         }
     }
 }
