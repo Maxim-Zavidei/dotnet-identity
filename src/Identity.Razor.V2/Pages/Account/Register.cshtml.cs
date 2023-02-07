@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Identity.Razor.V2.Models;
 using Identity.Razor.V2.Services;
 using Microsoft.AspNetCore.Identity;
@@ -38,9 +39,15 @@ public class RegisterModel : PageModel
             Position = RegisterViewModel.Position
         };
 
+        var departmentClaim = new Claim("Department", RegisterViewModel.Department);
+        var positionClaim = new Claim("Position", RegisterViewModel.Position);
+
         var result = await this.userManager.CreateAsync(user, RegisterViewModel.Password);
         if (result.Succeeded)
         {
+            await this.userManager.AddClaimAsync(user, departmentClaim);
+            await this.userManager.AddClaimAsync(user, positionClaim);
+
             var confirmationToken = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = Url.PageLink(pageName: "/Account/ConfirmEmail", values: new { userId = user.Id, token = confirmationToken });
 
