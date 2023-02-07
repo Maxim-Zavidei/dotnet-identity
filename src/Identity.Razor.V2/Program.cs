@@ -20,7 +20,10 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt =>
     opt.SignIn.RequireConfirmedEmail = true;
 })
 // Tell the identity system to use this particular db context to store users.
-.AddEntityFrameworkStores<ApplicationDbContext>();
+.AddEntityFrameworkStores<ApplicationDbContext>()
+// We're telling identity to use the default token providers e.g. when
+// generation an email confirmation token.
+.AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {
