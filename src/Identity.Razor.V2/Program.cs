@@ -19,7 +19,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt =>
     opt.Lockout.MaxFailedAccessAttempts = 5;
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
     opt.User.RequireUniqueEmail = true;
-    opt.SignIn.RequireConfirmedEmail = true;
+    opt.SignIn.RequireConfirmedEmail = false;
 })
 // Tell the identity system to use this particular db context to store users.
 .AddEntityFrameworkStores<ApplicationDbContext>()
