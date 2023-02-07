@@ -1,4 +1,6 @@
 using Identity.Razor.V2.Data;
+using Identity.Razor.V2.Options;
+using Identity.Razor.V2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +32,10 @@ builder.Services.ConfigureApplicationCookie(opt =>
     opt.LoginPath = "/Account/Login";
     opt.AccessDeniedPath = "/Account/AccessDenied";
 });
+
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("SMTP"));
+
+builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddRazorPages();
 
