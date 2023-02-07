@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Mail;
+using Identity.Razor.V2.Models;
 using Identity.Razor.V2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +9,13 @@ namespace Identity.Razor.V2.Pages;
 
 public class RegisterModel : PageModel
 {
-    private readonly UserManager<IdentityUser> userManager;
+    private readonly UserManager<User> userManager;
     private readonly IEmailService emailService;
 
     [BindProperty]
     public required RegisterViewModel RegisterViewModel { get; set; }
 
-    public RegisterModel(UserManager<IdentityUser> userManager, IEmailService emailService)
+    public RegisterModel(UserManager<User> userManager, IEmailService emailService)
     {
         this.userManager = userManager;
         this.emailService = emailService;
@@ -30,14 +29,13 @@ public class RegisterModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        // Validating email address
-
-
         // Create the user
-        var user = new IdentityUser
+        var user = new User
         {
             Email = RegisterViewModel.Email,
-            UserName = RegisterViewModel.Email
+            UserName = RegisterViewModel.Email,
+            Department = RegisterViewModel.Department,
+            Position = RegisterViewModel.Position
         };
 
         var result = await this.userManager.CreateAsync(user, RegisterViewModel.Password);
@@ -76,4 +74,10 @@ public class RegisterViewModel
     [Required]
     [DataType(dataType: DataType.Password)]
     public required string Password { get; set; }
+
+    [Required]
+    public required string Department { get; set; }
+
+    [Required]
+    public required string Position { get; set; }
 }

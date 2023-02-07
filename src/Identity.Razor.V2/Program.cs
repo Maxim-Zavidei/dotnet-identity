@@ -1,4 +1,5 @@
 using Identity.Razor.V2.Data;
+using Identity.Razor.V2.Models;
 using Identity.Razor.V2.Options;
 using Identity.Razor.V2.Services;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+builder.Services.AddIdentity<User, IdentityRole>(opt =>
 {
     opt.Password.RequiredLength = 8;
     opt.Password.RequireLowercase = true;

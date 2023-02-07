@@ -1,5 +1,4 @@
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+using Identity.Razor.V2.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,9 +7,9 @@ namespace Identity.Razor.V2.Pages.Account.Login;
 
 public class LoginModel : PageModel
 {
-    private readonly SignInManager<IdentityUser> signInManager;
+    private readonly SignInManager<User> signInManager;
 
-    public LoginModel(SignInManager<IdentityUser> signInManager)
+    public LoginModel(SignInManager<User> signInManager)
     {
         this.signInManager = signInManager;
     }
