@@ -1,0 +1,55 @@
+@page
+@model Identity.Razor.V2.Pages.Account.Login.LoginModel
+
+<p>
+    <h3>User login</h3>
+</p>
+
+<div class="container border p-3">
+    <form method="post">
+
+        @* Makes sure to validate the model. *@
+        <div class="text-danger" asp-validation-summary="All"></div>
+
+        <div class="form-group row py-2">
+            <div class="col-2">
+                <label asp-for="InputModel.Email"></label>
+            </div>
+            <div class="col-3">
+                <input type="text" asp-for="InputModel.Email" class="form-control" />
+            </div>
+            <div class="col-3">
+                <span class="text-danger" asp-validation-for="InputModel.Email"></span>
+            </div>
+        </div>
+
+        <div class="form-group row py-2">
+            <div class="col-2">
+                <label asp-for="InputModel.Password"></label>
+            </div>
+            <div class="col-3">
+                <input type="password" asp-for="InputModel.Password" class="form-control" />
+            </div>
+            <div class="col-3">
+                <span class="text-danger" asp-validation-for="InputModel.Password"></span>
+            </div>
+        </div>
+
+        <div class="form-group row my-2">
+            <div class="col-2">
+                <input type="checkbox" asp-for="InputModel.RememberMe" class="btn btn-primary" />
+                <label class="form-check-label" asp-for="InputModel.RememberMe"></label>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <input type="submit" class="btn btn-primary" value="Login" />
+            </div>
+            <div class="col">
+                <a class="btn btn-link" href="/Account/Register">Sign Up</a>
+            </div>
+        </div>
+
+    </form>
+</div>
