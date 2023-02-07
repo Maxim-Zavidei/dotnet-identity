@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Net.Mail;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Identity.Razor.V2.Pages;
-
 
 public class RegisterModel : PageModel
 {
@@ -40,9 +41,22 @@ public class RegisterModel : PageModel
         if (result.Succeeded)
         {
             var confirmationToken = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-            return Redirect(Url.PageLink(pageName: "/Account/ConfirmEmail", values: new { userId = user.Id, token = confirmationToken })!);
+            var confirmationLink = Url.PageLink(pageName: "/Account/ConfirmEmail", values: new { userId = user.Id, token = confirmationToken });
 
-            //return RedirectToPage("/Account/Login");
+            var message = new MailMessage(
+                "test@gmail.com",
+                user.Email,
+                "Please confirm your email",
+                $"Please click on this link to confirm your email address: {confirmationLink}"
+            );
+
+            using (var emailClient = new SmtpClient("some-smtp.com", 587))
+            {
+                emailClient.Credentials = new NetworkCredential("email", "password");
+                await emailClient.SendMailAsync(message);
+            }
+
+            return RedirectToPage("/Account/Login");
         }
         else
         {
