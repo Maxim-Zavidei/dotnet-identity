@@ -46,6 +46,7 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("SMTP")
 builder.Services.AddSingleton<IEmailService, EmailService>();
 
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -66,5 +67,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
