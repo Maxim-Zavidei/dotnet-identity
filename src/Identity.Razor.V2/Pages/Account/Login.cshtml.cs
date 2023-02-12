@@ -36,9 +36,8 @@ public class LoginModel : PageModel
         {
             if (result.RequiresTwoFactor)
             {
-                return RedirectToPage("/Account/LoginTwoFactor", new
+                return RedirectToPage("/Account/LoginTwoFactorWithAuthenticator", new
                 {
-                    Email = this.InputModel.Email,
                     RememberMe = this.InputModel.RememberMe
                 });
             }
