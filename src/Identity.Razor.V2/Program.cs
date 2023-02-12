@@ -7,6 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication().AddFacebook(opt =>
+{
+    opt.AppId = "applicationId";
+    opt.AppSecret = "applicationSecret";
+    
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 {
     opt.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]);

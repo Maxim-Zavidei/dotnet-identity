@@ -1,4 +1,5 @@
 using Identity.Razor.V2.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,8 +19,12 @@ public class LoginModel : PageModel
     [BindProperty]
     public required InputModel InputModel { get; set; }
 
-    public void OnGet()
+    [BindProperty]
+    public IEnumerable<AuthenticationScheme> ExternalLoginProviders { get; set; }
+
+    public async Task OnGet()
     {
+        this.ExternalLoginProviders = await signInManager.GetExternalAuthenticationSchemesAsync();
     }
 
     public async Task<IActionResult> OnPostAsync()
@@ -53,5 +58,12 @@ public class LoginModel : PageModel
 
             return Page();
         }
+    }
+
+    public IActionResult OnPostLoginExternally(string provider)
+    {
+        var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, null);
+        properties.RedirectUri = Url.Action("", "");
+        return Challenge(properties, provider);
     }
 }
